@@ -11,6 +11,7 @@ function Header() {
   };
   const [serch, setSerch] = useState("");
   const [suggitions, setSuggitions] = useState([]);
+  const [show, setShow] = useState(false);
   const searchCache = useSelector((store) => store.search);
   useEffect(() => {
     const time = setTimeout(() => {
@@ -22,8 +23,9 @@ function Header() {
     }, 300);
     return () => clearTimeout(time);
   }, [serch]);
+  console.log(suggitions, "this is suggitions");
+
   const getsuggistions = async () => {
-    console.log("api hited");
     const data = await fetch(YOUTUBE_SEARCH_API + serch);
     const json = await data.json();
     setSuggitions(json[1]);
@@ -57,18 +59,22 @@ function Header() {
             type="text"
             value={serch}
             onChange={(e) => setSerch(e.target.value)}
+            onFocus={(e) => console.log(setShow(true))}
+            onBlur={(e) => console.log(setShow(false))}
           />
           <button className="border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100">
             🔍
           </button>
           <div className="fixed bg-white py-2 px-2 w-[37rem] shadow-lg rounded-lg border border-gray-100">
-            <ul>
-              {suggitions.map((s) => (
-                <li key={s} className="py-2 px-3 shadow-sm hover:bg-gray-100">
-                  🔍 {s}
-                </li>
-              ))}
-            </ul>
+            {show && (
+              <ul>
+                {suggitions.map((s) => (
+                  <li key={s} className="py-2 px-3 shadow-sm hover:bg-gray-100">
+                    🔍 {s}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
