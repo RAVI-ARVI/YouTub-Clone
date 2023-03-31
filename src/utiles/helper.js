@@ -173,6 +173,8 @@ var nameList = [
   "Girl",
   "Vortex",
   "Paradox",
+  "Ravi",
+  "Priya",
 ];
 
 export function generateRandomName() {
